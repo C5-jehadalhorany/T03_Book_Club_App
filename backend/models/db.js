@@ -1,4 +1,6 @@
-const mysql = require("mysql2");
+const mysql = require('mysql2');
+
+require("dotenv").config();
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -12,7 +14,7 @@ connection.connect((err) => {
         console.log("error connecting ", err.stack);
 
     }
-    console.log(`connected as id ${connection, thredId}`);
+    console.log(`connected as id ` + connection.threadId);
 })
 
 module.exports = connection;
