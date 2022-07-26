@@ -6,24 +6,36 @@ const connection = require("../../models/db");
 const createBook = (req, res) => {
     const { Title, book_img } = req.body;
 
-    const query = `insert into books (Title, book_img) values (?,?);`;
-    const data = [Title, book_img];
-    connection.query(query, data, (err, result) => {
-        if (err) {
-            return res.status(404).json({
-                success: false,
-                massage: "not found",
-                err: err,
+    const role = req.token.role
+
+    if (role === "ADMIN") {
+        const query = `INSERT INTO books (Title,book_img ,is_accepted) VALUES (?,?,?) `;
+        const data = [Title, book_img, 1];
+        connection.query(query, data, (err, result) => {
+            console.log(result);
+            if (err) {
+                return res
+                    .status(500)
+                    .json({ success: false, message: "Server Error", err: err });
+            }
+
+            res.status(201).json({
+                success: true,
+                message: "book is added ",
+                book: result[0],
             });
-        };
+        });
+    }
+
+    else {
+
         res.status(201).json({
             success: true,
-            massage: "book created",
-            result: result,
-        });
-    });
-};
+            message: "book is send to admin to add the book ",
 
+        });
+    };
+}
 
 const getAllBooks = (req, res) => {
     const query = `select * from books where is_deleted=0; `;
