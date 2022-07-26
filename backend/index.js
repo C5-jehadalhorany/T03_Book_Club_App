@@ -10,6 +10,8 @@ const loginRouter = require("./routes/login");
 const registerRouter = require("./routes/register");
 const roleRouter = require("./routes/rols");
 const permissionRouter = require("./routes/permission");
+const readRouter = require("./routes/redinglist")
+
 
 const app = express();
 const PORT = process.env.PORT || 5000
@@ -29,7 +31,9 @@ app.use("/register", registerRouter);
 //rols
 app.use("/role", roleRouter);
 // permission 
-app.use("/permission", permissionRouter)
+app.use("/permission", permissionRouter);
+//reding list 
+app.use("/list", readRouter);
 
 
 
