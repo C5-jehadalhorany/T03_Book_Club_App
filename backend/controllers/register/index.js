@@ -1,4 +1,4 @@
-const connection = require("../models/db");
+const connection = require("../../models/db");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
