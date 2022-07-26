@@ -44,6 +44,7 @@ CREATE TABLE books(
     Title VARCHAR(255),
     is_deleted TINYINT DEFAULT 0,
     book_img VARCHAR(255),
+    acsept tinyint default 0,
     PRIMARY KEY (id)
 );
 
@@ -88,3 +89,4 @@ CREATE TABLE comments(
     is_deleted TINYINT DEFAULT 0,
     PRIMARY KEY (id)
 );
+
