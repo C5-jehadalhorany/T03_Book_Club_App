@@ -2,17 +2,17 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TextLinkExample from './components/Navbar';
 
-import BasicExample from './components/Register';
-// import SignUp from './components/Login';
-import SignUp from './components/Register';
-
+import Register from './components/Register';
+import Login from './components/Login';
+import BooksFunction from './components/Books';
 
 function App() {
   return (
     <div className="App">
       <TextLinkExample />
-      {/* <BasicExample /> */}
-      <SignUp/>
+      <Register />
+      <Login />
+      <BooksFunction/>
     </div >
   );
 }
