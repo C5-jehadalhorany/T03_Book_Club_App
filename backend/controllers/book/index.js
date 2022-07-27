@@ -8,8 +8,8 @@ const createBook = (req, res) => {
 
     const role = req.token.role
 
-    if (role === "ADMIN") {
-        const query = `INSERT INTO books (Title,book_img ,is_accepted) VALUES (?,?,?) `;
+    if (role === 1) {
+        const query = `INSERT INTO books (Title,book_img ,acsept) VALUES (?,?,?) `;
         const data = [Title, book_img, 1];
         connection.query(query, data, (err, result) => {
             console.log(result);
@@ -22,7 +22,7 @@ const createBook = (req, res) => {
             res.status(201).json({
                 success: true,
                 message: "book is added ",
-                book: result[0],
+                result: result,
             });
         });
     }
@@ -38,8 +38,8 @@ const createBook = (req, res) => {
 }
 
 const getAllBooks = (req, res) => {
-    const query = `select * from books where is_deleted=0; `;
-    connection.query(query, data, (err, result) => {
+    const query = `SELECT * from books where is_deleted=0;`;
+    connection.query(query,(err, result) => {
         if (err) {
             return res.status(404).json({
                 success: false,
