@@ -11,6 +11,7 @@ const registerRouter = require("./routes/register");
 const roleRouter = require("./routes/rols");
 const permissionRouter = require("./routes/permission");
 const readRouter = require("./routes/redinglist")
+const roomRouter = require("./routes/rooms")
 
 
 const app = express();
@@ -34,6 +35,9 @@ app.use("/role", roleRouter);
 app.use("/permission", permissionRouter);
 //reding list 
 app.use("/list", readRouter);
+//room
+app.use("/room", roomRouter);
+
 
 
 
