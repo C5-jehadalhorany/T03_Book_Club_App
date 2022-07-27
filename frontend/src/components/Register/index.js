@@ -1,70 +1,93 @@
-// import Button from 'react-bootstrap/Button';
-// import Form from 'react-bootstrap/Form';
-// import("./style.css");
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom";
+import { login, logout } from "../../redux/reducers/user";
+import("./style.css")
 
-// function BasicExample() {
-//     return (
-//         <div className='contaner'>
-//             <div className='register container  border rounded border-success '>
-//                 <Form container  >
-//                     <Form.Group className="mb-3" controlId="formBasicEmail">
-//                         <Form.Label>Email address</Form.Label>
-//                         <Form.Control type="email" placeholder="Enter email" />
-//                         <Form.Text className="text-muted">
-//                             We'll never share your email with anyone else.
-//                         </Form.Text>
-//                     </Form.Group>
-//                     <Form.Group className="mb-3" controlId="formBasicPassword">
-//                         <Form.Label>Password</Form.Label>
-//                         <Form.Control type="password" placeholder="Password" />
-//                     </Form.Group>
-//                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
-//                         <Form.Check type="checkbox" label="Check me out" />
-//                     </Form.Group>
-//                     <Button variant="primary" type="submit">
-//                         login
-//                     </Button>
-//                 </Form>
-//             </div>
-//         </div>);
-// }
+const Register = () => {
 
-// export default BasicExample;
+    const [usernames, setUsernames] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
 
 
-import React, { Component } from "react";
 
-export default class SignUp extends Component {
-    render() {
-        return (
-            <form>
-                <h3>Register</h3>
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-                <div className="form-group">
-                    <label>First name</label>
-                    <input type="text" className="form-control" placeholder="First name" />
-                </div>
+    const { token, Islogin, role_id, username } = useSelector((state) => {
+        return {
+            token: state.auth.token,
+            Islogin: state.auth.Islogin,
+            role_id: state.auth.role_id,
+            username: state.auth.username
+        };
+    });
 
-                <div className="form-group">
-                    <label>Last name</label>
-                    <input type="text" className="form-control" placeholder="Last name" />
-                </div>
+    const register = () => {
+        console.log(usernames, email, password);
 
-                <div className="form-group">
-                    <label>Email</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
-                </div>
+        axios
+      .post(`http://localhost:5000/register/`, { usernames, email, password })
+      .then((result) => {
+        console.log(result);
+        navigate("/login");
+        setMessage("createing pass")
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
 
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
-                </div>
+        setMessage(err.response.data.message);
+      });
 
-                <button type="submit" className="btn btn-dark btn-lg btn-block">Register</button>
-                <p className="forgot-password text-right">
-                    Already registered <a href="#">log in?</a>
-                </p>
-            </form>
-        );
+/* 
+        axios.post(`http://localhost:5000/register`, { username, email, password }).then((result) => {
+            console.log(result);
+            if (result.data.success) {
+                setMessage("The user has been created successfully")
+                console.log(result.data);
+            }
+        }).catch((err) => {
+            setMessage(err)
+        }) */
     }
+
+    return (
+        <>
+            <div className="registerCont">
+                <div className="register">
+                    <h2 className="titleR">Register Form</h2>
+                    <br></br>
+                    <input
+                        type={"text"}
+                        placeholder="Enter userName"
+                        onChange={(e) => {
+                            setUsernames(e.target.value);
+                        }}
+                    />
+                    <input
+                        type={"email"}
+                        placeholder="Enter Your email"
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                        }}
+                    />
+                    <input
+                        type={"password"}
+                        placeholder="Enter Your Password"
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                        }}
+                    />
+                    <h1 className="mss">{message}</h1>
+                    <button onClick={() => { register() }}>Sign Up</button>
+                </div>
+            </div>
+        </>
+    )
 }
+
+
+export default Register

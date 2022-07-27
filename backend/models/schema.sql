@@ -32,7 +32,7 @@ CREATE TABLE users(
     id INT AUTO_INCREMENT NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    username VARCHAR(255) NOT NULL UNIQUE,
+    username VARCHAR(255) NOT NULL ,
     role_id INT,
     FOREIGN KEY (role_id) REFERENCES roles(id),
     is_deleted TINYINT DEFAULT 0,

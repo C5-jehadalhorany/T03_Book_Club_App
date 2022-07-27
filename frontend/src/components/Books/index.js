@@ -22,8 +22,12 @@ const BooksFunction = () => {
 
 
     const booksRender = () => {
-        axios.get(`http://localhost:5000/book`,{token:token}).then((result) => {
-            console.log(result.data);
+        axios.get(`http://localhost:5000/book`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((result) => {
+            console.log(result.data.result);
 
         }).catch((err) => {
             console.log(err);
@@ -35,7 +39,7 @@ const BooksFunction = () => {
         booksRender()
     }, [])
 
-    return <button onClick={()=>{booksRender()}}>as</button>
+    return <button onClick={() => { booksRender() }}>as</button>
 }
 
 export default BooksFunction
