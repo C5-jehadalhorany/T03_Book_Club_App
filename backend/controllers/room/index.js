@@ -36,7 +36,7 @@ const createRoom = (req, res) => {
 
 
 const getAllRoom = (req, res) => {
-    const query = `select * from rooms where is_deleted=0; `;
+    const query = `select * from rooms where is_deleted=0;`;
     connection.query(query, data, (err, result) => {
         if (err) {
             return res.status(404).json({
@@ -47,7 +47,7 @@ const getAllRoom = (req, res) => {
         }
         res.status(200).json({
             success: true,
-            massage: "All the books",
+            massage: "All the Room ",
             result: result,
         });
     });
@@ -70,12 +70,12 @@ const getRoomById = (req, res) => {
         } if (!result.length) {
             return res.status(404).json({
                 success: false,
-                massage: "The boods is Not found",
+                massage: "The Room  is Not found",
             })
         }
         res.status(200).json({
             success: true,
-            massage: `the books ${id}`,
+            massage: `the Room  ${id}`,
             result: result,
         });
     });
@@ -98,13 +98,13 @@ const deleteRoomById = (req, res) => {
         if (!result.changedRows) {
             return res.status(404).json({
                 success: false,
-                massage: `The books ${id} is not found`,
+                massage: `The Room  ${id} is not found`,
                 err: err,
             });
         }
         res.status(200).json({
             success: true,
-            massage: `Succeeded to delete books with id : ${id}`,
+            massage: `Succeeded to delete Room  with id : ${id}`,
             result: result,
         });
     });
