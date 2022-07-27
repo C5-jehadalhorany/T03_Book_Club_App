@@ -2,10 +2,10 @@ const connection = require("../../models/db");
 
 
 const createRoom = (req, res) => {
-    const book_id = req.params.id
-    const { description, } = req.body;
-    const admin_id = req.token.userId
-    const query = `select * from books where id =? and  is_deleted=0 ;`;
+    const book_id = req.params.id;
+    const { description } = req.body;
+    const role = req.token.role
+    const query = `SELECT * FROM books WHERE id = ? and is_deleted=0`;
     const data = [book_id];
     connection.query(query, data, (err, result) => {
         if (result.length === 0) {
@@ -15,29 +15,31 @@ const createRoom = (req, res) => {
                 err: err,
             });
         };
-        const query = `insert into rooms (description,book_id,admin_id ) values (?,?,?);`
-        const data2 = [description, book_id, admin_id]
-        connection.query(query, data2, (err, result) => {
+        const query2 = `insert into rooms (description,book_id,admin_id) values (?,?,?);`;
+        const data2 = [description, book_id,role];
+        connection.query(query2, data2, (err, result) => {
             if (err) {
                 return res.status(500).json({
                     success: false,
                     massage: "not ",
                     err: err,
                 });
-            }
-        })
-        res.status(201).json({
-            success: true,
-            massage: "room created",
-            result: result,
+            };
+            res.status(201).json({
+                success: true,
+                massage: "room created",
+                result: result,
+            });
         });
+
     });
+
 };
 
 
 const getAllRoom = (req, res) => {
     const query = `select * from rooms where is_deleted=0;`;
-    connection.query(query, data, (err, result) => {
+    connection.query(query, (err, result) => {
         if (err) {
             return res.status(404).json({
                 success: false,
