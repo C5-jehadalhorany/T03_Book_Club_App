@@ -25,7 +25,7 @@ const login = (req, res) => {
                         }
                     })
                     const payload = {
-                        firstName: result[0].firstName,
+                        username: result[0].username,
                         userId: result[0].id,
                         role: result[0].role_id,
                         email: result[0].email
@@ -36,7 +36,8 @@ const login = (req, res) => {
                         success: true,
                         token,
                         userId: result[0].id,
-                        firstName: result[0].firstName,
+                        username: result[0].username,
+                        role_id: result[0].role_id
                     });
                 } else {
                     res.status(403).json({
