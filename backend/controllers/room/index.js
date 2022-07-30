@@ -36,7 +36,6 @@ const createRoom = (req, res) => {
 
 };
 
-
 const getAllRoom = (req, res) => {
     const query = ` SELECT * FROM rooms INNER JOIN books ON rooms.book_id = books.id WHERE rooms.is_deleted=0`;
     connection.query(query, (err, result) => {
