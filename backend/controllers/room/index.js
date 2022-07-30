@@ -16,7 +16,7 @@ const createRoom = (req, res) => {
             });
         };
         const query2 = `insert into rooms (description,book_id,admin_id) values (?,?,?);`;
-        const data2 = [description, book_id,role];
+        const data2 = [description, book_id, role];
         connection.query(query2, data2, (err, result) => {
             if (err) {
                 return res.status(500).json({
@@ -38,7 +38,7 @@ const createRoom = (req, res) => {
 
 
 const getAllRoom = (req, res) => {
-    const query = `select * from rooms where is_deleted=0;`;
+    const query = ` SELECT * FROM rooms INNER JOIN books ON rooms.book_id = books.id WHERE rooms.is_deleted=0`;
     connection.query(query, (err, result) => {
         if (err) {
             return res.status(404).json({
